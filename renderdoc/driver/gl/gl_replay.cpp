@@ -4350,6 +4350,7 @@ RDResult CreateReplayDevice(RDCDriver rdcdriver, RDCFile *rdc, const ReplayOptio
 {
   GLInitParams initParams;
   uint64_t ver = GLInitParams::CurrentVersion;
+  bool isCreatedOnANGLE = false;
 
   // if we have an RDCFile, open the frame capture section and serialise the init params.
   // if not, we're creating a proxy-capable device so use default-initialised init params.
@@ -4389,13 +4390,18 @@ RDResult CreateReplayDevice(RDCDriver rdcdriver, RDCFile *rdc, const ReplayOptio
     if(ser.IsErrored())
       return ser.GetError();
 
-    if(!initParams.renderer.empty())
+    if (!initParams.renderer.empty())
+    {
       RDCLOG("Capture was created on %s / %s", initParams.renderer.c_str(),
              initParams.version.c_str());
+      isCreatedOnANGLE = initParams.renderer.contains("ANGLE");
+    }
   }
 
-  GLWindowingData data = {};
+  if (isCreatedOnANGLE)
+      EGLUseANGLE(true);
 
+  GLWindowingData data = {};
   RDResult status = platform.InitialiseAPI(data, rdcdriver, opts.apiValidation);
 
   // any errors will be already printed, just pass the error up

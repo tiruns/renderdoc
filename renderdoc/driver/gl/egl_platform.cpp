@@ -26,6 +26,9 @@
 #include "strings/string_utils.h"
 #include "egl_dispatch_table.h"
 #include "gl_common.h"
+#include "official/eglext_angle.h"
+
+static bool gEGLUseANGLE = false;
 
 static void *GetEGLHandle()
 {
@@ -395,7 +398,22 @@ class EGLPlatform : public GLPlatform
     else if(xlibDisplay)
       display = (EGLNativeDisplayType)xlibDisplay;
 
-    EGLDisplay eglDisplay = EGL.GetDisplay(display);
+    EGLDisplay eglDisplay = nullptr;
+    if (!gEGLUseANGLE)
+    {
+      eglDisplay = EGL.GetDisplay(display);
+    }
+    else
+    {
+      EGLint attribList[] = {
+          EGL_PLATFORM_ANGLE_TYPE_ANGLE,
+          EGL_PLATFORM_ANGLE_TYPE_VULKAN_ANGLE,
+          EGL_NONE,
+          EGL_NONE
+      };
+      eglDisplay = EGL.GetPlatformDisplayEXT(EGL_PLATFORM_ANGLE_ANGLE, display, attribList);
+    }
+
     if(!eglDisplay)
     {
       RETURN_ERROR_RESULT(ResultCode::APIInitFailed, "Couldn't open default EGL display");
@@ -457,6 +475,11 @@ class EGLPlatform : public GLPlatform
 GLPlatform &GetEGLPlatform()
 {
   return eglPlatform;
+}
+
+void EGLUseANGLE(bool useANGLE)
+{
+    gEGLUseANGLE = useANGLE;
 }
 
 EGLDispatchTable EGL = {};

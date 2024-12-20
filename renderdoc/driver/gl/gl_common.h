@@ -377,6 +377,7 @@ GLPlatform &GetGLPlatform();
 
 // using EGL. Different name since it both platform GL and EGL libraries can be available at once
 GLPlatform &GetEGLPlatform();
+void EGLUseANGLE(bool useANGLE = true);
 
 #endif
 

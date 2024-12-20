@@ -64,6 +64,8 @@ typedef EGLBoolean(EGLAPIENTRY *PFN_eglGetConfigAttrib)(EGLDisplay dpy, EGLConfi
 typedef const char *(EGLAPIENTRY *PFN_eglQueryString)(EGLDisplay dpy, EGLint name);
 typedef EGLBoolean(EGLAPIENTRY *PFN_eglQueryContext)(EGLDisplay dpy, EGLContext ctx,
                                                      EGLint attribute, EGLint *value);
+typedef EGLDisplay(EGLAPIENTRY *PFN_eglGetPlatformDisplayEXT)(EGLenum platform,
+                                                     void* native_display, const EGLint* attrib_list);
 typedef PFNEGLPOSTSUBBUFFERNVPROC PFN_eglPostSubBufferNV;
 typedef PFNEGLSWAPBUFFERSWITHDAMAGEEXTPROC PFN_eglSwapBuffersWithDamageEXT;
 typedef PFNEGLSWAPBUFFERSWITHDAMAGEKHRPROC PFN_eglSwapBuffersWithDamageKHR;
@@ -96,7 +98,8 @@ typedef PFNEGLSWAPBUFFERSWITHDAMAGEKHRPROC PFN_eglSwapBuffersWithDamageKHR;
   FUNC(Initialize, false, true);           \
   FUNC(QueryAPI, false, true);             \
   FUNC(QuerySurface, false, true);         \
-  FUNC(QueryContext, false, true);
+  FUNC(QueryContext, false, true);         \
+  FUNC(GetPlatformDisplayEXT, true, true);
 
 struct EGLDispatchTable
 {
