@@ -485,7 +485,7 @@ if(UNIX)
     # assume is present) directly to build the binary
 
     if(CMAKE_CROSSCOMPILING)
-        set(HOST_NATIVE_CPP_COMPILER c++ CACHE STRING "Command to run to compile a .cpp into an executable. Default is just c++")
+        set(HOST_NATIVE_CPP_COMPILER cl CACHE STRING "Command to run to compile a .cpp into an executable. Default is just c++")
 
         add_custom_command(OUTPUT ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/include-bin
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
