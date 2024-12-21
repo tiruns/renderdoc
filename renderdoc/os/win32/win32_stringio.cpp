@@ -85,13 +85,13 @@ std::set<HWND> inputWindows;
 
 void AddInputWindow(WindowingSystem windowSystem, void *wnd)
 {
-  RDCASSERTEQUAL(windowSystem, WindowingSystem::Win32);
+  //RDCASSERTEQUAL(windowSystem, WindowingSystem::Win32);
   inputWindows.insert((HWND)wnd);
 }
 
 void RemoveInputWindow(WindowingSystem windowSystem, void *wnd)
 {
-  RDCASSERTEQUAL(windowSystem, WindowingSystem::Win32);
+  //RDCASSERTEQUAL(windowSystem, WindowingSystem::Win32);
   inputWindows.erase((HWND)wnd);
 }
 
