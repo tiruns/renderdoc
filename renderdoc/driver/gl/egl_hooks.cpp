@@ -1051,7 +1051,7 @@ bool ShouldHookEGL()
   // hook EGL in spite of the layers being present
   if(ignore_layers.size() >= 1 && ignore_layers[0] == '1')
     return true;
-
+  /*
   const char *eglExts = query_string(EGL_NO_DISPLAY, EGL_EXTENSIONS);
 
   if(eglExts && strstr(eglExts, "EGL_ANDROID_GLES_layers"))
@@ -1059,6 +1059,7 @@ bool ShouldHookEGL()
     RDCLOG("EGL_ANDROID_GLES_layers detected, disabling EGL hooks - GLES layering in effect");
     return false;
   }
+  */
 
   return true;
 }
