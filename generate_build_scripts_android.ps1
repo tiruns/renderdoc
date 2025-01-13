@@ -1,19 +1,36 @@
 ./set_android_env.ps1
 
-if (test-path "build-android-64")
-{
-    rmdir "build-android-64" -r
-}
-mkdir "build-android-64" | out-null
-cd "build-android-64"
-cmake -DBUILD_ANDROID=On -DANDROID_ABI=arm64-v8a -G "Ninja" ..\
-cd ..
+$targets = "build-android-64", "build-android-32"
+# $stripe = $args[0] -eq "-s" -or $args[0] -eq "--stripe"
 
-if (test-path "build-android-32")
+foreach ($target in $targets)
 {
-    rmdir "build-android-32" -r
+    if (test-path $target)
+    {
+        rmdir $target -r
+    }
+
+    mkdir $target | out-null
+    cd $target
+
+    $abi = "arm64-v8a"
+    if ($target.Contains("32"))
+    {
+        $abi = "armeabi-v7a"
+    }
+
+    cmake -DCMAKE_BUILD_TYPE=Release -DSTRIP_ANDROID_LIBRARY=On -DBUILD_ANDROID=On `
+        -DANDROID_ABI="$abi" -G "Ninja" ..\
+
+    # if ($stripe)
+    # {
+    #   cmake -DCMAKE_BUILD_TYPE=Release -DSTRIP_ANDROID_LIBRARY=On -DBUILD_ANDROID=On `
+    #       -DANDROID_ABI="$abi" -G "Ninja" ..\
+    # }
+    # else
+    # {
+    #     cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_ANDROID=On -DANDROID_ABI="$abi" -G "Ninja" ..\
+    # }
+
+    cd ..
 }
-mkdir "build-android-32" | out-null
-cd "build-android-32"
-cmake -DBUILD_ANDROID=On -DANDROID_ABI=armeabi-v7a -G "Ninja" ..\
-cd ..
