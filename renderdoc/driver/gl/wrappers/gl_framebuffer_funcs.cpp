@@ -3181,6 +3181,16 @@ void WrappedOpenGL::glRenderbufferStorageMultisampleEXT(GLenum target, GLsizei s
   }
 }
 
+void WrappedOpenGL::glEGLImageTargetTexture2DOES(GLenum target, GLeglImageOES image)
+{
+    return GL.glEGLImageTargetTexture2DOES(target, image);
+}
+
+void WrappedOpenGL::glEGLImageTargetRenderbufferStorageOES(GLenum target, GLeglImageOES image)
+{
+  return GL.glEGLImageTargetRenderbufferStorageOES(target, image);
+}
+
 INSTANTIATE_FUNCTION_SERIALISED(void, glGenFramebuffers, GLsizei n, GLuint *framebuffers);
 INSTANTIATE_FUNCTION_SERIALISED(void, glCreateFramebuffers, GLsizei n, GLuint *framebuffers);
 INSTANTIATE_FUNCTION_SERIALISED(void, glNamedFramebufferTextureEXT, GLuint framebufferHandle,

@@ -2561,6 +2561,9 @@ public:
   IMPLEMENT_FUNCTION_SERIALISED(void, glGetPerfQueryInfoINTEL, GLuint queryId,
                                 GLuint queryNameLength, GLchar *queryName, GLuint *dataSize,
                                 GLuint *noCounters, GLuint *noInstances, GLuint *capsMask);
+
+  IMPLEMENT_FUNCTION_SERIALISED(void, glEGLImageTargetTexture2DOES, GLenum target, GLeglImageOES image);
+  IMPLEMENT_FUNCTION_SERIALISED(void, glEGLImageTargetRenderbufferStorageOES, GLenum target, GLeglImageOES image);
 };
 
 class ScopedDebugContext
