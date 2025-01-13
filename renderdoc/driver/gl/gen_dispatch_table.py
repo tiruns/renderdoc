@@ -26,19 +26,19 @@ pathname = os.path.abspath(os.path.dirname(sys.argv[0])) + os.path.sep
 f = open(pathname + 'gl_dispatch_table_defs.h', mode='w', newline = nl)
 
 # Finding definitions in the dispatch table header
-def_regex = re.compile('(?P<typedef>PFN.*PROC) (?P<name>.*);(\s*\/\/ aliases +)?(?P<aliases>[a-zA-Z0-9_ ,]*)?')
+def_regex = re.compile(r'(?P<typedef>PFN.*PROC) (?P<name>.*);(\s*\/\/ aliases +)?(?P<aliases>[a-zA-Z0-9_ ,]*)?')
 
 # Finding a function definition in the official headers
-func_regex = re.compile('(WINAPI|APIENTRY) (w?gl[A-Za-z_0-9]+)\s?\(')
+func_regex = re.compile(r'(WINAPI|APIENTRY) (w?gl[A-Za-z_0-9]+)\s?\(')
 
 # Finding a typedef in the official headers
-typedef_regex = re.compile('^typedef (?P<return>[A-Za-z_0-9\s*]+)\([A-Z_ *]* (?P<typedef>PFN[A-Z_0-9]+)\) \((?P<args>.*)\);')
+typedef_regex = re.compile(r'^typedef (?P<return>[A-Za-z_0-9\s*]+)\([A-Z_ *]* (?P<typedef>PFN[A-Z_0-9]+)\) \((?P<args>.*)\);')
 
 # Replacing float arg[2] with float *arg in definitions
-array_regex = re.compile('([A-Za-z_][a-zA-Z_0-9]*) ([A-Za-z_][a-zA-Z_0-9]*)\[[0-9]*\]')
+array_regex = re.compile(r'([A-Za-z_][a-zA-Z_0-9]*) ([A-Za-z_][a-zA-Z_0-9]*)\[[0-9]*\]')
 
 # Split an argument definition up by extracting the last full word
-argsplit_regex = re.compile('(.*)([\*\s])([a-zA-Z0-9]+)')
+argsplit_regex = re.compile(r'(.*)([\*\s])([a-zA-Z0-9]+)')
 
 # List of hooks to define, will be filled out when processing the dispatch table header
 hooks = []
